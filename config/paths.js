@@ -3,7 +3,7 @@
  * @Autor: liang
  * @Date: 2020-07-09 11:33:49
  * @LastEditors: liang
- * @LastEditTime: 2020-07-09 16:52:50
+ * @LastEditTime: 2020-07-15 11:46:07
  */
 const path = require("path");
 const fs = require("fs");
@@ -21,6 +21,8 @@ const publicUrlOrPath = getPublicUrlOrPath(
 module.exports = {
   appPath: resolveApp("."),
   appSrc: resolveApp("src"),
+  appBuild: resolveApp("dist"),
+  appPublic: resolveApp("public"),
   appIndexJs: resolveModule(resolveApp, "src/index"),
   appHtml: resolveApp("public/index.html"),
   publicUrlOrPath,
