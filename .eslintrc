@@ -1,0 +1,27 @@
+{
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "rules": {
+    "eqeqeq": 2, //必须使用全等
+    "no-var": 2, //禁止使用var声明
+    "no-unused-vars": 1,
+    "no-undef": 0
+  }
+}

@@ -1,0 +1,5 @@
+build/
+node_mobuled/
+config/
+public/
+dist/
