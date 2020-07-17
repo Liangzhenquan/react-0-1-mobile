@@ -3,13 +3,13 @@
  * @Autor: liang
  * @Date: 2020-07-09 13:32:18
  * @LastEditors: liang
- * @LastEditTime: 2020-07-17 13:07:17
+ * @LastEditTime: 2020-07-17 16:53:37
  */
 
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const config = require('../config/webpack.dev');
-const devserConfig = require('../config/devServer.config');
+const createDevServerConfig = require('../config/devServer.config');
 // const compiler = webpack(config);
 const paths = require('../config/paths');
 const {
@@ -42,7 +42,8 @@ checkBrowsers(paths.appPath, isInteractive)
       devSocket,
       webpack
     });
-    const server = new WebpackDevServer(compiler, devserConfig);
+    const serverConfig = createDevServerConfig(urls.lanUrlForConfig);
+    const server = new WebpackDevServer(compiler, serverConfig);
     server.listen(port, HOST, () => {
       console.log('服务启动中....');
       openBrowser(urls.localUrlForBrowser);

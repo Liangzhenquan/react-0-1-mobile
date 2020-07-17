@@ -3,7 +3,7 @@
  * @Autor: liang
  * @Date: 2020-07-09 11:03:40
  * @LastEditors: liang
- * @LastEditTime: 2020-07-17 13:44:00
+ * @LastEditTime: 2020-07-17 16:33:31
  */
 const paths = require('./paths.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -38,7 +38,11 @@ module.exports = function (mode) {
   };
   return {
     mode,
-    entry: paths.appIndexJs,
+    entry: [
+      isEnvDevelopment &&
+        require.resolve('react-dev-utils/webpackHotDevClient'),
+      paths.appIndexJs
+    ].filter(Boolean),
     resolve: {
       alias: {
         '@': paths.appSrc
