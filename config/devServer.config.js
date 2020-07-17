@@ -3,13 +3,13 @@
  * @Autor: liang
  * @Date: 2020-07-09 13:12:16
  * @LastEditors: liang
- * @LastEditTime: 2020-07-15 17:53:57
+ * @LastEditTime: 2020-07-17 11:00:13
  */
 const path = require('path');
 const paths = require('./paths');
 
 module.exports = {
-  contentBase: path.join(paths.appPath, 'dist'),
+  contentBase: paths.appPath,
   contentBasePublicPath: paths.publicUrlOrPath,
   watchContentBase: true,
   compress: true,
