@@ -3,7 +3,7 @@
  * @Autor: liang
  * @Date: 2020-07-09 11:03:40
  * @LastEditors: liang
- * @LastEditTime: 2020-07-17 16:33:31
+ * @LastEditTime: 2020-07-19 20:16:10
  */
 const paths = require('./paths.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -14,6 +14,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const getClientEnvironment = require('./env');
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 const cssRegex = /\.css$/;
+const lessRegex = /\.less$/;
 const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
 );
@@ -32,8 +33,40 @@ module.exports = function (mode) {
       {
         loader: require.resolve('css-loader'),
         options: cssOptions
+      },
+      {
+        loader: require.resolve('postcss-loader'),
+        options: {
+          ident: 'postcss',
+          plugins: () => [
+            require('postcss-flexbugs-fixes'),
+            require('postcss-preset-env')({
+              autoprefixer: {
+                flexbox: 'no-2009'
+              },
+              stage: 0
+            })
+          ]
+        }
       }
     ];
+    if (preProcessor) {
+      loaders.push(
+        {
+          loader: require.resolve('resolve-url-loader')
+        },
+        {
+          loader: require.resolve(preProcessor),
+          options: {
+            sourceMap: true,
+            lessOptions: {
+              modifyVars: {},
+              javascriptEnabled: true
+            }
+          }
+        }
+      );
+    }
     return loaders.filter(Boolean);
   };
   return {
@@ -96,6 +129,16 @@ module.exports = function (mode) {
                 sourceMap: false
               }),
               sideEffects: true
+            },
+            {
+              test: lessRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 3,
+                  sourceMap: false
+                },
+                'less-loader'
+              )
             },
             {
               loader: require.resolve('file-loader'),

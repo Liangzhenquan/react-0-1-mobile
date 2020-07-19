@@ -3,10 +3,13 @@
  * @Autor: liang
  * @Date: 2020-07-09 10:14:52
  * @LastEditors: liang
- * @LastEditTime: 2020-07-17 16:44:48
+ * @LastEditTime: 2020-07-19 20:16:45
  */
-import React from 'react';
+import React, { useState } from 'react';
 import './app.css';
+import './app.less';
 export default function App() {
-  return <div className="app">ipoipipip</div>;
+  const [count] = useState(0);
+
+  return <div className="app">{count}</div>;
 }
