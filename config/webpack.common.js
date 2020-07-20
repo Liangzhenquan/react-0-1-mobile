@@ -3,7 +3,7 @@
  * @Autor: liang
  * @Date: 2020-07-09 11:03:40
  * @LastEditors: liang
- * @LastEditTime: 2020-07-20 15:42:12
+ * @LastEditTime: 2020-07-20 15:55:59
  */
 const paths = require('./paths.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -116,6 +116,7 @@ module.exports = function (mode) {
                 options: {
                   presets: ['@babel/preset-env', '@babel/preset-react'],
                   plugins: [
+                    'ramda',
                     [
                       'import',
                       {
