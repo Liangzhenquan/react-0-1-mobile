@@ -3,7 +3,7 @@
  * @Autor: liang
  * @Date: 2020-07-09 11:03:40
  * @LastEditors: liang
- * @LastEditTime: 2020-07-19 20:16:10
+ * @LastEditTime: 2020-07-20 15:42:12
  */
 const paths = require('./paths.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -44,7 +44,7 @@ module.exports = function (mode) {
               autoprefixer: {
                 flexbox: 'no-2009'
               },
-              stage: 0
+              stage: 3
             })
           ]
         }
@@ -60,7 +60,7 @@ module.exports = function (mode) {
           options: {
             sourceMap: true,
             lessOptions: {
-              modifyVars: {},
+              modifyVars: require(paths.appPackageJson).theme,
               javascriptEnabled: true
             }
           }
@@ -116,6 +116,14 @@ module.exports = function (mode) {
                 options: {
                   presets: ['@babel/preset-env', '@babel/preset-react'],
                   plugins: [
+                    [
+                      'import',
+                      {
+                        libraryName: 'antd',
+                        libraryDirectory: 'es',
+                        style: true //不用less，则是css，用less，此处为true
+                      }
+                    ],
                     '@babel/plugin-proposal-class-properties', //类组件支持
                     '@babel/plugin-transform-runtime'
                   ]
