@@ -3,7 +3,7 @@
  * @Autor: liang
  * @Date: 2020-07-09 13:32:18
  * @LastEditors: liang
- * @LastEditTime: 2020-07-17 16:53:37
+ * @LastEditTime: 2020-07-20 17:20:16
  */
 
 const webpack = require('webpack');
@@ -23,6 +23,7 @@ const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 7000;
 const HOST = process.env.HOST || '0.0.0.0';
 const isInteractive = process.stdout.isTTY;
 console.log('111', paths.appPath);
+const { appPackageJson } = paths;
 checkBrowsers(paths.appPath, isInteractive)
   .then(() => {
     return choosePort(HOST, DEFAULT_PORT);
@@ -42,7 +43,10 @@ checkBrowsers(paths.appPath, isInteractive)
       devSocket,
       webpack
     });
-    const serverConfig = createDevServerConfig(urls.lanUrlForConfig);
+    const serverConfig = createDevServerConfig(
+      require(appPackageJson).proxy,
+      urls.lanUrlForConfig
+    );
     const server = new WebpackDevServer(compiler, serverConfig);
     server.listen(port, HOST, () => {
       console.log('服务启动中....');
