@@ -3,20 +3,19 @@
  * @Autor: liang
  * @Date: 2020-07-23 10:39:08
  * @LastEditors: liang
- * @LastEditTime: 2020-07-23 16:52:06
+ * @LastEditTime: 2020-07-24 11:54:29
  */
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { router } from './registered';
 // 路由守卫
-function RouterGuard({ children, meta, ...props }) {
-  React.useEffect(() => {
-    if (meta) {
-      if (meta.requiresAuth) {
-        // props.history.replace('/login');
-      }
-    }
-  }, []);
+function RouterGuard({ children, requiresAuth, ...props }) {
+  // React.useEffect(() => {
+  if (requiresAuth) {
+    props.history.replace('/login');
+    return null;
+  }
+  // }, []);
   return React.cloneElement(children, props);
 }
 // 一级路由
@@ -25,7 +24,11 @@ function RouteWithRoutes(route) {
     <Route
       path={route.path}
       render={(props) => (
-        <RouterGuard {...props} meta={route.meta} routes={route.children || []}>
+        <RouterGuard
+          {...props}
+          requiresAuth={route.requiresAuth}
+          routes={route.children || []}
+        >
           <route.component />
         </RouterGuard>
       )}

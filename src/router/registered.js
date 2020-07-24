@@ -3,7 +3,7 @@
  * @Autor: liang
  * @Date: 2020-07-23 10:46:29
  * @LastEditors: liang
- * @LastEditTime: 2020-07-24 09:33:56
+ * @LastEditTime: 2020-07-24 10:46:04
  */
 // 路由注册
 import Login from '@/views/login';
@@ -18,6 +18,7 @@ export const router = [
   },
   {
     path: '/',
+    requiresAuth: true,
     component: Dashboard
   },
   {
