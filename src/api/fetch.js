@@ -3,10 +3,11 @@
  * @Autor: liang
  * @Date: 2020-07-20 17:11:49
  * @LastEditors: liang
- * @LastEditTime: 2020-07-22 17:05:40
+ * @LastEditTime: 2020-07-24 10:31:28
  */
 import 'whatwg-fetch';
 import { useRequest } from 'ahooks';
+import { message } from 'antd';
 const handleStatus = (statu) => {
   switch (statu) {
     case 400:
@@ -19,6 +20,20 @@ const handleStatus = (statu) => {
       break;
   }
 };
+const promiseTimeout = (fetch) => {
+  const TIME = 20000;
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject('请求超时');
+    }, TIME);
+  });
+  const controller = new AbortController();
+  const signal = controller.signal;
+  return Promise.race([promise, fetch(signal)]).catch((err) => {
+    controller.abort();
+    message.error(err);
+  });
+};
 const originFetch = fetch;
 Object.defineProperty(window, 'fetch', {
   configurable: true,
@@ -30,7 +45,7 @@ Object.defineProperty(window, 'fetch', {
         ...options,
         ...{
           headers: {
-            token: localStorage.getItem('token') || 'Bearer test'
+            token: localStorage.getItem('token')
           },
           ...options.headers
         }
@@ -46,7 +61,9 @@ Object.defineProperty(window, 'fetch', {
 });
 
 const post = (url, body) =>
-  fetch(url, { body: JSON.stringify(body), method: 'POST' });
+  promiseTimeout((signal) =>
+    fetch(url, { signal, body: JSON.stringify(body), method: 'POST' })
+  );
 const get = (url, body) => {
   let path = url;
   if (body) {
@@ -57,7 +74,7 @@ const get = (url, body) => {
     }, '?');
     path = url + query;
   }
-  return fetch(path);
+  return promiseTimeout((signal) => fetch(path, { signal }));
 };
 const usePost = (url, config) => {
   return useRequest((params) => post(url, params), config);

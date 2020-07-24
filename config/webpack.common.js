@@ -3,14 +3,13 @@
  * @Autor: liang
  * @Date: 2020-07-09 11:03:40
  * @LastEditors: liang
- * @LastEditTime: 2020-07-23 17:20:11
+ * @LastEditTime: 2020-07-24 09:49:24
  */
 const paths = require('./paths.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
 
 const getClientEnvironment = require('./env');
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
@@ -173,31 +172,12 @@ module.exports = function (mode) {
       ),
       new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
-      isEnvDevelopment && new CaseSensitivePathsPlugin(),
       new webpack.DefinePlugin(env.stringified),
       isEnvProduction &&
         new MiniCssExtractPlugin({
           filename: 'static/css/[name].[contenthash:8].css',
           chunkFilename: 'static/css/[name].[contenthash:8].chunk.css'
-        }),
-      new ManifestPlugin({
-        fileName: 'asset-manifest.json',
-        publicPath: paths.publicUrlOrPath,
-        generate: (seed, files, entrypoints) => {
-          const manifestFiles = files.reduce((manifest, file) => {
-            manifest[file.name] = file.path;
-            return manifest;
-          }, seed);
-          const entrypointFiles = entrypoints.main.filter(
-            (fileName) => !fileName.endsWith('.map')
-          );
-
-          return {
-            files: manifestFiles,
-            entrypoints: entrypointFiles
-          };
-        }
-      })
+        })
     ].filter(Boolean)
   };
 };
