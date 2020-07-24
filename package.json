@@ -1,6 +1,6 @@
 {
   "name": "react",
-  "appName": "后台管理系统",
+  "appName": "喜玛拉雅后台管理系统",
   "version": "1.0",
   "private": true,
   "scripts": {
@@ -56,7 +56,14 @@
   },
   "theme": {
     "primary-color": "#409eff",
-    "bg-color": "#eeeeee"
+    "@layout-header-height": "50px",
+    "bg-color": "#eeeeee",
+    "siderColor": "#343235",
+    "@layout-header-background": "#343235",
+    "@menu-bg": "#343235",
+    "@menu-item-color": "#fff",
+    "@menu-item-active-bg": "#409eff",
+    "@menu-highlight-color": "#fff"
   },
   "browserslist": {
     "production": [

@@ -3,18 +3,17 @@
  * @Autor: liang
  * @Date: 2020-07-23 10:39:08
  * @LastEditors: liang
- * @LastEditTime: 2020-07-24 11:54:29
+ * @LastEditTime: 2020-07-24 15:40:31
  */
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { router } from './registered';
+import { router, menus } from './registered';
 // 路由守卫
 function RouterGuard({ children, requiresAuth, ...props }) {
   // React.useEffect(() => {
-  if (requiresAuth) {
-    props.history.replace('/login');
-    return null;
-  }
+  //   if (requiresAuth) {
+  //     // props.history.replace('/login');
+  //   }
   // }, []);
   return React.cloneElement(children, props);
 }
@@ -48,4 +47,4 @@ function RouteWithSubRoutes({ routes }) {
     </Switch>
   );
 }
-export { RouteWithRoutes, RouteWithSubRoutes, router };
+export { RouteWithRoutes, RouteWithSubRoutes, router, menus };
