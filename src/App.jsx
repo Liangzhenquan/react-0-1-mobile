@@ -3,31 +3,41 @@
  * @Autor: liang
  * @Date: 2020-07-09 10:14:52
  * @LastEditors: liang
- * @LastEditTime: 2020-07-22 18:23:44
+ * @LastEditTime: 2020-07-24 09:27:11
  */
-import React, { useState, useEffect } from 'react';
-import { Button, message } from 'antd';
-import { login } from './api';
-import './app.css';
+import React from 'react';
+import { message } from 'antd';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import { ThemeProvider } from 'styled-components';
+import { theme, GlobalStyle } from './style';
+import '@/assets/fonts/iconfont.js';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from 'react-router-dom';
+import { router, RouteWithRoutes } from '@/router';
 message.config({
   duration: 2,
   maxCount: 2
 });
 export default function App() {
-  const [count] = useState(0);
-  const { data, run } = login();
-  useEffect(() => {
-    run({
-      username: 'admin',
-      password: '123456'
-    });
-  }, []);
-
   return (
-    <div>
-      {count}
-      <div className="app">{data.name}</div>
-      <Button>antd button</Button>
-    </div>
+    <ErrorBoundary>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Switch>
+            {router.map((route) => (
+              <RouteWithRoutes {...route} key={route.path} />
+            ))}
+            <Route path="*">
+              <Redirect to="/404" />
+            </Route>
+          </Switch>
+        </Router>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }

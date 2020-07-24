@@ -3,7 +3,7 @@
  * @Autor: liang
  * @Date: 2020-07-09 13:32:18
  * @LastEditors: liang
- * @LastEditTime: 2020-07-20 17:20:16
+ * @LastEditTime: 2020-07-23 17:55:32
  */
 
 const webpack = require('webpack');
@@ -15,6 +15,7 @@ const paths = require('../config/paths');
 const {
   choosePort,
   createCompiler,
+  prepareProxy,
   prepareUrls
 } = require('react-dev-utils/WebpackDevServerUtils');
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
@@ -37,14 +38,16 @@ checkBrowsers(paths.appPath, isInteractive)
         server.sockWrite(server.sockets, 'warnings', warnings),
       errors: (errors) => server.sockWrite(server.sockets, 'errors', errors)
     };
+    const appName = require(appPackageJson).name;
     const compiler = createCompiler({
       config,
       urls,
+      appName,
       devSocket,
       webpack
     });
     const serverConfig = createDevServerConfig(
-      require(appPackageJson).proxy,
+      require(paths.appPackageJson).proxy,
       urls.lanUrlForConfig
     );
     const server = new WebpackDevServer(compiler, serverConfig);

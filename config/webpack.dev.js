@@ -3,16 +3,15 @@
  * @Autor: liang
  * @Date: 2020-07-09 18:07:16
  * @LastEditors: liang
- * @LastEditTime: 2020-07-10 18:31:44
+ * @LastEditTime: 2020-07-24 09:25:49
  */
-const { merge } = require("webpack-merge");
-const common = require("./webpack.common.js");
-module.exports = merge(common("development"), {
+const paths = require('./paths');
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common.js');
+module.exports = merge(common('development'), {
   output: {
-    path: undefined,
     pathinfo: true,
-    filename: "static/js/bundle.js",
-    chunkFilename: "static/js/[name].chunk.js",
+    publicPath: paths.publicUrlOrPath
   },
-  devtool: "source-map",
+  devtool: 'source-map'
 });

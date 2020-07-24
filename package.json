@@ -1,5 +1,6 @@
 {
   "name": "react",
+  "appName": "后台管理系统",
   "version": "1.0",
   "private": true,
   "scripts": {
@@ -27,6 +28,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.13.0",
     "babel-plugin-ramda": "^2.0.0",
+    "case-sensitive-paths-webpack-plugin": "^2.3.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.6.0",
     "eslint": "^7.4.0",
@@ -49,10 +51,12 @@
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
+    "webpack-manifest-plugin": "^2.2.0",
     "webpack-merge": "^5.0.9"
   },
   "theme": {
-    "primary-color": "red"
+    "primary-color": "#409eff",
+    "bg-color": "#eeeeee"
   },
   "browserslist": {
     "production": [

@@ -3,11 +3,12 @@
  * @Autor: liang
  * @Date: 2020-05-23 10:02:51
  * @LastEditors: liang
- * @LastEditTime: 2020-05-27 20:07:03
+ * @LastEditTime: 2020-07-23 15:21:50
  */
 //获取NODE_ENV和REACT_APP_ *环境变量并将其准备为
 //通过webpack配置中的DefinePlugin注入到应用程序中。
 const REACT_APP = /^REACT_APP_/i;
+const { appPackageJson } = require('./paths');
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
     .filter((key) => REACT_APP.test(key))
@@ -20,6 +21,7 @@ function getClientEnvironment(publicUrl) {
         // Useful for determining whether we’re running in production mode.
         // Most importantly, it switches React into the correct mode.
         NODE_ENV: process.env.NODE_ENV || 'development',
+        appName: require(appPackageJson).appName,
         // Useful for resolving the correct path to static assets in `public`.
         // For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
         // This should only be used as an escape hatch. Normally you would put
