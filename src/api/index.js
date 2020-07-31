@@ -3,10 +3,10 @@
  * @Autor: liang
  * @Date: 2020-07-21 15:24:58
  * @LastEditors: liang
- * @LastEditTime: 2020-07-24 18:28:58
+ * @LastEditTime: 2020-07-31 14:01:05
  */
 import { useGet } from './fetch';
-import { message } from 'antd';
+import { toast } from 'antd-mobile';
 const initialArray = [];
 const inititalObj = {};
 const inititalStr = '';
@@ -19,7 +19,7 @@ const inititalNum = 0;
  *   show: 是否展示res.code状态吗不符合期望时的提示，默认提示,传入onError不提示
  *   showSuccess: 是否展示res.code状态吗符合期望时的提示
  *   onSuccess: 自定义期望code的逻辑与返回,参数为res; (res) => {}
- *   onError: 自定义非期望code的逻辑，参数为res; (res) => {},未定义则使用antd的message提示消息
+ *   onError: 自定义非期望code的逻辑，参数为res; (res) => {},未定义则使用antd的Toast提示消息
  * }
  * @return init or onSuccess
  * @author: liang
@@ -41,10 +41,10 @@ const filterCode = ({
   };
   try {
     if (res.code === '200000') {
-      showSuccess && message.success(res.mesg);
+      showSuccess && Toast.success(res.mesg);
       return isFunc() ? onSucess(res) : res.data;
     } else if (show) {
-      errorIsFunc() ? onError(res) : message.error(res.mesg);
+      errorIsFunc() ? onError(res) : Toast.fail(res.mesg);
     }
   } catch (err) {
     isFunc() ? onSucess(res) : console.log(err);

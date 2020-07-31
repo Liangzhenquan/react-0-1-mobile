@@ -1,12 +1,10 @@
 import React from 'react';
-import { Result, Button } from 'antd';
+import { Result } from 'antd-mobile';
 function NotFound() {
   return (
     <Result
-      status="404"
-      title="404"
-      subTitle="页面找不到"
-      extra={<Button type="primary">返回</Button>}
+      title="无法完成操作"
+      message="由于你的支付宝账户还未绑定淘宝账户请登请登录www.taobao.com"
     />
   );
 }

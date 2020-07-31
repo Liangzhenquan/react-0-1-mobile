@@ -1,13 +1,8 @@
 import React from 'react';
-import { Spin } from 'antd';
 import styled from 'styled-components';
 function Loading({ loading, children }) {
   if (loading) {
-    return (
-      <Container className="123">
-        <Spin />
-      </Container>
-    );
+    return <Container className="123"></Container>;
   }
   return children;
 }

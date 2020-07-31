@@ -3,11 +3,11 @@
  * @Autor: liang
  * @Date: 2020-07-20 17:11:49
  * @LastEditors: liang
- * @LastEditTime: 2020-07-24 17:44:10
+ * @LastEditTime: 2020-07-31 13:59:57
  */
 import 'whatwg-fetch';
 import { useRequest } from 'ahooks';
-import { message } from 'antd';
+import { Toast } from 'antd-mobile';
 const handleStatus = (statu) => {
   switch (statu) {
     case 400:
@@ -31,7 +31,7 @@ const promiseTimeout = (fetch) => {
   const controller = new AbortController();
   return Promise.race([promise, fetch(controller)]).catch((err) => {
     controller.abort();
-    message.error(err);
+    Toast.offline(err, 1);
   });
 };
 const originFetch = fetch;

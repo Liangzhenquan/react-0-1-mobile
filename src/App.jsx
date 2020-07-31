@@ -3,10 +3,9 @@
  * @Autor: liang
  * @Date: 2020-07-09 10:14:52
  * @LastEditors: liang
- * @LastEditTime: 2020-07-24 09:27:11
+ * @LastEditTime: 2020-07-31 16:11:19
  */
 import React from 'react';
-import { message } from 'antd';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { ThemeProvider } from 'styled-components';
 import { theme, GlobalStyle } from './style';
@@ -18,10 +17,7 @@ import {
   Switch
 } from 'react-router-dom';
 import { router, RouteWithRoutes } from '@/router';
-message.config({
-  duration: 2,
-  maxCount: 2
-});
+
 export default function App() {
   return (
     <ErrorBoundary>

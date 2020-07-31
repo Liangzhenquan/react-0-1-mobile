@@ -3,19 +3,21 @@
  * @Autor: liang
  * @Date: 2020-07-20 15:52:35
  * @LastEditors: liang
- * @LastEditTime: 2020-07-31 11:27:40
+ * @LastEditTime: 2020-07-31 19:00:43
  */
 import { theme } from '../package.json';
 import styled, { createGlobalStyle } from 'styled-components';
 
-export const Title = styled.div`
-  color: ${(props) =>
-    props.primary ? props.theme['primary-color'] : props.color};
-  font-size: ${(props) => props.size};
-  font-weight: ${(props) => props.weight};
-`;
+// export const Title = styled.div``;
 
 const GlobalStyle = createGlobalStyle`
+html {
+   font-size: 50px;
+   color: #333;
+}
+body {
+   font-size: 12px;
+}
 <style type="text/css">
 .icon {
    width: 1em;

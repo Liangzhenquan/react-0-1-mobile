@@ -3,7 +3,7 @@
  * @Autor: liang
  * @Date: 2020-07-09 11:03:40
  * @LastEditors: liang
- * @LastEditTime: 2020-07-24 09:49:24
+ * @LastEditTime: 2020-07-31 17:43:14
  */
 const paths = require('./paths.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -18,6 +18,7 @@ const lessRegex = /\.less$/;
 const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
 );
+
 module.exports = function (mode) {
   const isEnvDevelopment = mode === 'development';
   const isEnvProduction = mode === 'production';
@@ -35,19 +36,19 @@ module.exports = function (mode) {
         options: cssOptions
       },
       {
-        loader: require.resolve('postcss-loader'),
-        options: {
-          ident: 'postcss',
-          plugins: () => [
-            require('postcss-flexbugs-fixes'),
-            require('postcss-preset-env')({
-              autoprefixer: {
-                flexbox: 'no-2009'
-              },
-              stage: 3
-            })
-          ]
-        }
+        loader: require.resolve('postcss-loader')
+        // options: {
+        //   ident: 'postcss',
+        //   plugins: () => [
+        //     require('postcss-flexbugs-fixes'),
+        //     require('postcss-preset-env')({
+        //       autoprefixer: {
+        //         flexbox: 'no-2009'
+        //       },
+        //       stage: 3
+        //     })
+        //   ]
+        // }
       }
     ];
     if (preProcessor) {
@@ -120,8 +121,7 @@ module.exports = function (mode) {
                     [
                       'import',
                       {
-                        libraryName: 'antd',
-                        libraryDirectory: 'es',
+                        libraryName: 'antd-mobile',
                         style: true //不用less，则是css，用less，此处为true
                       }
                     ],
@@ -134,7 +134,7 @@ module.exports = function (mode) {
             {
               test: cssRegex,
               use: getStyleLoaders({
-                importLoaders: 1,
+                importLoaders: 2,
                 sourceMap: false
               }),
               sideEffects: true

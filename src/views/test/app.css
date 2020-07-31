@@ -1,0 +1,8 @@
+.test {
+  background: #409eff;
+  margin: 10px auto;
+  font-size: 20px;
+  display: flex;
+  flex: 1;
+  box-sizing: border-box;
+}
