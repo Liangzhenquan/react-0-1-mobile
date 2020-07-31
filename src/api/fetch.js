@@ -3,7 +3,7 @@
  * @Autor: liang
  * @Date: 2020-07-20 17:11:49
  * @LastEditors: liang
- * @LastEditTime: 2020-07-24 10:31:28
+ * @LastEditTime: 2020-07-24 17:44:10
  */
 import 'whatwg-fetch';
 import { useRequest } from 'ahooks';
@@ -20,6 +20,7 @@ const handleStatus = (statu) => {
       break;
   }
 };
+export let cancelFetch = {};
 const promiseTimeout = (fetch) => {
   const TIME = 20000;
   const promise = new Promise((resolve, reject) => {
@@ -28,8 +29,7 @@ const promiseTimeout = (fetch) => {
     }, TIME);
   });
   const controller = new AbortController();
-  const signal = controller.signal;
-  return Promise.race([promise, fetch(signal)]).catch((err) => {
+  return Promise.race([promise, fetch(controller)]).catch((err) => {
     controller.abort();
     message.error(err);
   });
@@ -41,8 +41,11 @@ Object.defineProperty(window, 'fetch', {
   // writable: true,
   get() {
     return (url, options = {}) => {
+      const { signal } = options.controller;
+      cancelFetch[url] = options.controller;
       return originFetch(url, {
         ...options,
+        signal,
         ...{
           headers: {
             token: localStorage.getItem('token')
@@ -61,8 +64,8 @@ Object.defineProperty(window, 'fetch', {
 });
 
 const post = (url, body) =>
-  promiseTimeout((signal) =>
-    fetch(url, { signal, body: JSON.stringify(body), method: 'POST' })
+  promiseTimeout((controller) =>
+    fetch(url, { controller, body: JSON.stringify(body), method: 'POST' })
   );
 const get = (url, body) => {
   let path = url;
@@ -74,12 +77,14 @@ const get = (url, body) => {
     }, '?');
     path = url + query;
   }
-  return promiseTimeout((signal) => fetch(path, { signal }));
+  return promiseTimeout((controller) => fetch(path, { controller }));
 };
 const usePost = (url, config) => {
-  return useRequest((params) => post(url, params), config);
+  const urlPath = process.env.NODE_ENV === 'development' ? '/v2' + url : url;
+  return useRequest((params) => post(urlPath, params), config);
 };
 const useGet = (url, config) => {
-  return useRequest((params) => get(url, params), config);
+  const urlPath = process.env.NODE_ENV === 'development' ? '/v2' + url : url;
+  return useRequest((params) => get(urlPath, params), config);
 };
 export { usePost, useGet };

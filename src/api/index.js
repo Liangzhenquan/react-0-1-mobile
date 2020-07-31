@@ -3,11 +3,11 @@
  * @Autor: liang
  * @Date: 2020-07-21 15:24:58
  * @LastEditors: liang
- * @LastEditTime: 2020-07-22 18:21:57
+ * @LastEditTime: 2020-07-24 18:28:58
  */
 import { useGet } from './fetch';
 import { message } from 'antd';
-// const initialArray = [];
+const initialArray = [];
 const inititalObj = {};
 const inititalStr = '';
 const inititalNum = 0;
@@ -62,5 +62,20 @@ export const login = () => {
         showSuccess: true
       });
     }
+  });
+};
+// 首页
+export const getInfo = () => {
+  return useGet('/index', {
+    initialData: inititalObj
+  });
+};
+// 获取活动列表
+
+export const getCampList = () => {
+  return useGet('/camp/search', {
+    initialData: initialArray,
+    loadMore: true,
+    isNoMore: () => {}
   });
 };

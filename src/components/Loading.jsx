@@ -1,12 +1,15 @@
 import React from 'react';
 import { Spin } from 'antd';
 import styled from 'styled-components';
-function Loading() {
-  return (
-    <Container>
-      <Spin />
-    </Container>
-  );
+function Loading({ loading, children }) {
+  if (loading) {
+    return (
+      <Container className="123">
+        <Spin />
+      </Container>
+    );
+  }
+  return children;
 }
 const Container = styled.div`
   height: 100%;

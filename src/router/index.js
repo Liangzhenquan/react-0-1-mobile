@@ -3,11 +3,12 @@
  * @Autor: liang
  * @Date: 2020-07-23 10:39:08
  * @LastEditors: liang
- * @LastEditTime: 2020-07-24 15:40:31
+ * @LastEditTime: 2020-07-24 17:46:26
  */
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { router, menus } from './registered';
+import { cancelFetch } from '@/api/fetch';
 // 路由守卫
 function RouterGuard({ children, requiresAuth, ...props }) {
   // React.useEffect(() => {
@@ -15,6 +16,12 @@ function RouterGuard({ children, requiresAuth, ...props }) {
   //     // props.history.replace('/login');
   //   }
   // }, []);
+  if (JSON.stringify(cancelFetch) !== '{}') {
+    Object.entries(cancelFetch).forEach(([key]) => {
+      cancelFetch[key].abort();
+    });
+  }
+
   return React.cloneElement(children, props);
 }
 // 一级路由

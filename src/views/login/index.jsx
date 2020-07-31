@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Input, Button, Checkbox, Form } from 'antd';
 import { login } from '@/api';
+import { icons } from '@/utils/variable';
 import Icon from '@/components/Icon';
 function Login() {
   const { appName } = process.env;
@@ -23,7 +24,7 @@ function Login() {
             rules={[{ required: true, message: '请输入用户名' }]}
           >
             <Input
-              prefix={<Icon name="yonghu" />}
+              prefix={<Icon name={icons.user} />}
               placeholder="请输入用户名"
               size="large"
             />
@@ -33,7 +34,7 @@ function Login() {
             rules={[{ required: true, message: '请输入密码' }]}
           >
             <Input.Password
-              prefix={<Icon name="mima" />}
+              prefix={<Icon name={icons.password} />}
               placeholder="请输入密码"
               size="large"
             />

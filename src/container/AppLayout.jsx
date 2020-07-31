@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import AppSider from './AppSider';
+import styled from 'styled-components';
 import { RouteWithSubRoutes } from '@/router';
 const { Header, Content, Sider } = Layout;
 function AppLayout({ routes }) {
@@ -23,10 +24,15 @@ function AppLayout({ routes }) {
       <Layout>
         <Header>Header</Header>
         <Content>
-          <RouteWithSubRoutes routes={flatRoutes()} />
+          <Contain>
+            <RouteWithSubRoutes routes={flatRoutes()} />
+          </Contain>
         </Content>
       </Layout>
     </Layout>
   );
 }
+const Contain = styled.div`
+  padding: 10px;
+`;
 export default AppLayout;

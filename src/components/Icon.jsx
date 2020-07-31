@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-function Icon({ name }) {
+function Icon({ name, fill }) {
   return (
-    <Svg className="icon" aria-hidden="true">
-      <use xlinkHref={`#icon-${name}`} />
+    <Svg className="icon" aria-hidden="true" fill={fill}>
+      <use xlinkHref={`#${name}`} />
     </Svg>
   );
 }

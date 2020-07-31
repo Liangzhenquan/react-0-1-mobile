@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import { Menu } from 'antd';
+import Icon from '@/components/Icon';
 import { menus } from '@/router';
 const { SubMenu } = Menu;
 function AppSider({ location }) {
@@ -29,18 +30,32 @@ function AppSider({ location }) {
   const handleSelect = () => {
     const selected = menus.find((menu) => !menu.sub && menu.path === pathname);
     if (selected) {
-      console.log('sss', selected);
       setSelectedKeys([selected.path]);
       setOpenKeys([]);
     }
   };
   const renderItem = (menu) => (
-    <Menu.Item key={menu.path}>
+    <Menu.Item
+      key={menu.path}
+      icon={
+        <span className="anticon anticon-calendar">
+          <Icon name={menu.icon} fill="#fff" />
+        </span>
+      }
+    >
       <Link to={menu.path}>{menu.title}</Link>
     </Menu.Item>
   );
   const renderSub = (menus) => (
-    <SubMenu title={menus.title} key={menus.title}>
+    <SubMenu
+      title={menus.title}
+      key={menus.title}
+      icon={
+        <span className="anticon anticon-calendar">
+          <Icon name={menus.icon} fill="#fff" />
+        </span>
+      }
+    >
       {menus.sub.map((menu) => renderItem(menu))}
     </SubMenu>
   );
